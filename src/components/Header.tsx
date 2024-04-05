@@ -14,7 +14,6 @@ import { Error } from '../types/Error';
 
 export const Header: React.FC = () => {
   const [title, setTitle] = useState('');
-  const [shouldNotFocusInput, setShouldNotFocusInput] = useState(true);
 
   const myInput = useRef<HTMLInputElement>(null);
 
@@ -29,10 +28,10 @@ export const Header: React.FC = () => {
   } = useContext(TodoContext);
 
   useEffect(() => {
-    if (myInput.current && shouldNotFocusInput) {
+    if (myInput.current) {
       myInput.current.focus();
     }
-  }, [shouldNotFocusInput, loadingTodo]);
+  }, [loadingTodo]);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -78,8 +77,6 @@ export const Header: React.FC = () => {
   const uncompletedTodos = todos.filter(todo => !todo.completed);
 
   const handleToggleTodos = () => {
-    setShouldNotFocusInput(false);
-
     const todosToUpdate = uncompletedTodos.length
       ? uncompletedTodos
       : todos;
